@@ -75,7 +75,8 @@ ___3 = async function() {
                 {
                     jobName: item.getElementsByClassName("_407a15d6")[0].children[1].innerText,
                     companyName: item.getElementsByClassName("e6590096 d2e620b9 _3ff84621 _0b90939f _52b33e66 _1ccd852b _2b366c9a fee11784 _381c41ae a303fa94")[0].innerText,
-                    description: document.getElementsByClassName("_75228706 deb54ec4 f27679e3 _9d763823 c62a27b1 ca9510cb d71b598c _7c466880 ffa98c5a _3b42afd3")[0].children[2].innerText
+                    description: document.getElementsByClassName("_75228706 deb54ec4 f27679e3 _9d763823 c62a27b1 ca9510cb d71b598c _7c466880 ffa98c5a _3b42afd3")[0].children[2].innerText,
+                    jobUrl: document.getElementsByClassName("e6590096 _3293afb7 _3ff84621 _0b90939f _4434babe _1ccd852b _2b366c9a fee11784 _381c41ae _91345936")[0]?.children[0]?.href || item.querySelector('a[href*="/jobs/view/"]')?.href || ""
                 }
             )
         } catch (e) {console.log(e)}

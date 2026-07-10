@@ -2,10 +2,11 @@
 
 Small browser-console workflow for collecting LinkedIn job data, asking an AI to review it, and optionally hiding the jobs that the AI marked as bad matches.
 
-The repository has three main files:
+The repository has four main files:
 
-- `script_a.js` - paste this into the browser console on a LinkedIn jobs page. It opens jobs one by one, extracts job title, company name, and description, then shows a `Download` button with the collected JSON.
-- `prompt_base.md` - base prompt for an AI assistant. Attach the JSON file created by `script_a.js` and ask the AI to return only the jobs that should be removed or ignored.
+- `script_a.js` - paste this into the browser console on a LinkedIn jobs page. It opens jobs one by one, extracts job title, company name, description, and job URL, then shows a `Download` button with the collected JSON.
+- `prompt_base.md` - base prompt for an AI assistant. Attach the JSON file created by `script_a.js` and ask the AI to return JSON with only the jobs that should be removed or ignored.
+- `prompt_base_links.md` - alternative prompt for an AI assistant. Attach one or more JSON files created by `script_a.js` and ask the AI to return a readable list of jobs to consider and jobs to skip, including links.
 - `script_b.js` - optional cleanup script. Paste the AI output into the script, run it in the browser console, and it will press the `X` button for matching bad jobs in the LinkedIn UI.
 
 ## Why Use This
@@ -33,7 +34,7 @@ The script will:
 
 1. Go through the visible job cards.
 2. Open each job.
-3. Extract the job name, company name, and description.
+3. Extract the job name, company name, description, and job URL.
 4. Show progress in the console.
 5. Add a `Download` button in the middle of the page when finished.
 
@@ -45,13 +46,16 @@ LinkedIn_jobs_1234567890.json
 
 ### 3. Ask AI To Filter Jobs
 
-Open `prompt_base.md` and use it as the prompt for your AI assistant.
+Choose one prompt depending on what you want next:
+
+- Use `prompt_base.md` if you want JSON output that can be pasted into `script_b.js`.
+- Use `prompt_base_links.md` if you want a human-readable report with direct links and do not plan to run `script_b.js`.
 
 Before sending the prompt, replace the example `Company name blacklist` and `Non-fit requirements` sections with your own rules. The current values are only examples of one person's filtering preferences.
 
 Attach the JSON file downloaded from `script_a.js`.
 
-The AI should return a valid JSON array where each item has:
+When using `prompt_base.md`, the AI should return a valid JSON array where each item has:
 
 ```json
 {
@@ -62,6 +66,18 @@ The AI should return a valid JSON array where each item has:
 ```
 
 The output must include only red-flagged jobs. Keep this JSON output if you want to use `script_b.js`.
+
+When using `prompt_base_links.md`, the AI should return two sections:
+
+```markdown
+**Jobs to consider:**
+https://www.linkedin.com/jobs/view/123123/
+
+**Jobs to not consider:**
+- *Example Company*, [Example Job](https://www.linkedin.com/jobs/view/3232/): Short reason.
+```
+
+That output is intended for manual review, not for `script_b.js`.
 
 ### 4. Optional: Remove Bad Jobs With Script B
 
@@ -94,4 +110,5 @@ The script will find matching visible jobs by `companyName` and `jobName`, press
 - These scripts depend on LinkedIn's current page structure and CSS classes. If LinkedIn changes the UI, selectors may need to be updated.
 - Run the scripts only on job lists you can visually inspect. `script_b.js` performs UI actions automatically.
 - The AI output for `script_b.js` must be valid JavaScript-compatible JSON array syntax.
+- `prompt_base_links.md` relies on the `jobUrl` field collected by `script_a.js`; older downloaded JSON files may not have links.
 - `script_a.js` waits between opening jobs to give LinkedIn time to render the description. If job descriptions are incomplete, increase the `___m1` delay in `script_a.js`.
