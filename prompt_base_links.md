@@ -1,9 +1,14 @@
-I need you to help me filter jobs from LinkedIn. I'll provide you a file(s) with json array with multiple fields. I need you to print me back valid JSON array with following structure per item:
-- `companyName`: original comapany name
-- `jobName`: original job name
-- `reason`: short reason on why did you decided to add this job to list
+I need you to help me filter jobs from LinkedIn. I'll provide you a file(s) with json array with multiple fields. I need you to print me formatted message, that follows the structure:
+```
+**Jobs to consider:**
+https://www.linkedin.com/jobs/view/123123/
+https://www.linkedin.com/jobs/view/321321/
 
-Your list should only consist from red-flagged jobs. It's up to you to select those. Make your decision with following rules:
+**Jobs to not consider:**
+- *Company name*, [Job name](https://www.linkedin.com/jobs/view/3232/): The reason explanation of 256 symbols max.
+```
+
+The "Jobs to consider" list should only consist from non-red-flagged jobs, but "Jobs to not consider" is opposite. It's up to you to select those. Make your decision with following rules:
 - If company name is **nearly** exact or exact match with entry from blacklist - it's a red flag
 - If job description have multiple explicit non-fit requirements - it's a red flag. Note, that some jobs have unnecessary requirements, which should be coinsidered as less-value.
 
