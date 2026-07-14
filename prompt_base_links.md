@@ -12,7 +12,7 @@ The "Jobs to consider" list should only consist from non-red-flagged jobs, but "
 - If company name is **nearly** exact or exact match with entry from blacklist - it's a red flag
 - If job description have multiple explicit non-fit requirements - it's a red flag. Note, that some jobs have unnecessary requirements, which should be coinsidered as less-value.
 
-Company name blacklist: IGT, Zensar Technologies, Clarivate, Nortal, BairesDev, HireRight, WorldQuant, Quik Hire Staffing, Keyrus, Hired, FullStack Labs, Revolut, Hire Feed, Yelp, Flex Living, Backblaze, Scribe, SAP Fioneer, Planner 5D.
+Company name blacklist: IGT, Zensar Technologies, Clarivate, Nortal, BairesDev, HireRight, WorldQuant, Quik Hire Staffing, Keyrus, Hired, FullStack Labs, Revolut, Hire Feed, Yelp, Flex Living, Backblaze, Scribe, SAP Fioneer, Planner 5D, Gtemas, Zühlke Group.
 
 Non-fit requirements:
 - If company doesn't have Java Proficency/Solid knowledge requirement, but have other languages Proficency/Solid knowledge requirement. If job have any mention of Java, e.g. "Java is also fine", than it cannot be red flagged
