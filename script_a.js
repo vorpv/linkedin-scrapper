@@ -112,7 +112,7 @@ ___28 = (card, jobName) => {
     .filter((line, index, arr) => arr.indexOf(line) === index)
     .filter(line => !line.includes(jobName));
 
-  return lines.find(line => !/^(Actively reviewing applicants|Promoted|Viewed|Applied|Easy Apply|Reposted|Posted\b|\d+\s+\w+\s+ago|Be an early applicant)$/i.test(line)) || "";
+  return lines.find(line => !/^(Viewed|Saved|Applied|Reposted)$/i.test(line)) || "";
 };
 
 ___29 = (card) => {
@@ -124,6 +124,11 @@ ___29 = (card) => {
     || document.querySelector('a[href*="/jobs/view/"]:not([href*="/apply/"])');
   return ___23(link?.href);
 };
+
+___32 = (card) => Array.from(card.querySelectorAll("p, span"))
+  .filter(node => !node.closest("button"))
+  .filter(node => node.getAttribute("aria-hidden") !== "true")
+  .some(node => /^(Viewed|Saved)$/i.test(___22(node.innerText || node.textContent)));
 
 ___30 = () => {
   const cardsByDismissButton = Array.from(document.querySelectorAll('button[aria-label^="Dismiss "][aria-label$=" job"]'))
@@ -138,7 +143,7 @@ ___30 = () => {
     if (!byKey.has(key)) byKey.set(key, card);
   });
 
-  return Array.from(byKey.values());
+  return Array.from(byKey.values()).filter(card => !___32(card));
 };
 
 ___2 = ___30();
